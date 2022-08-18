@@ -1,0 +1,100 @@
+<snippet>
+	<content><![CDATA[
+
+
+# MYDOMAIN.LOCAL and example.conf
+#
+# Notes: this file may be append to httpd.conf or move to httpd.d or
+# sites-enable directory, in this case don't forget to modify your
+# httpd.conf to read the .conf files of this directory
+# some like this:
+# IncludeOptional sites-enabled/*.conf
+# change the listen port if needed
+#
+# Open then listen port in your firewall and set SELinux environment
+# to get access to the web site, some like this:
+#
+# create directory to the new web site
+# mkdir /var/www/html/MYDOMAIN
+#
+# Establish SELinux permissions:
+# chcon -Rt httpd_sys_content_t /var/www/html
+# chcon -Rt httpd_sys_rw_content_t /var/www/html/modules
+#
+# SELinux can connect to network
+# setsebool -P httpd_can_network_connect on
+# setsebool -P httpd_unified 1
+
+# html web contente accesible via nfs
+# setsebool -P httpd_use_nfs on
+# idem by cifs (Windows)
+# setsebool -P httpd_use_cifs on
+#
+# semanage fcontext -a -t httpd_sys_content_t "/var/www/html(/.*)?"
+# semanage fcontext -a -t httpd_log_t "/var/www/html(/.*)?"
+#
+# list ports for http/https listen
+# semanage port -l | grep http# 
+# semanage port -a -t http_port_t -p tcp 80
+# semanage port -a -t http_port_t -p tcp 443
+
+# firewall configuration for apache http
+# firewall-cmd --permanent --zone=public --add-service=http
+# firewall-cmd --permanent --zone=public --add-service=https
+# firewall-cmd --permanent --zone=internal --add-service=http
+# firewall-cmd --permanent --zone=internal --add-service=https
+# firewall-cmd --permanent --zone=home --add-service=http
+# firewall-cmd --permanent --zone=home --add-service=https
+# firewall-cmd --reload
+#
+# systemctl restart httpd
+#
+# Create SSL certificate (auto signed)
+# need openssl package installed
+#
+# mkdir /etc/ssl/private
+# chmod 700 /etc/ssl/private
+#
+# openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt
+# openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+# cat /etc/ssl/certs/dhparam.pem | sudo tee -a /etc/ssl/certs/apache-selfsigned.crt
+#
+# modify the conf of your SSL site
+# vim /etc/httpd/conf.d/ssl.conf
+
+
+cat <<EOF > example.conf
+<VirtualHost *:443>
+    ServerName www.MYDOMAIN.LOCAL
+    ServerAlias example.com
+    DocumentRoot /var/www/html/example.com/public_html
+    ErrorLog /var/www/html/example.com/error.log
+    CustomLog /var/www/html/example.com/requests.log combined
+    SSLEngine on
+    SSLCertificateFile /etc/ssl/certs/apache-selfsigned.crt
+    SSLCertificateKeyFile /etc/ssl/private/apache-selfsigned.key
+
+	<Directory /var/www/htmlexample.com>
+	    Options +FollowSymlinks
+	    AllowOverride All
+	    Require all granted
+    </Directory>
+
+    # ErrorLog ${APACHE_LOG_DIR}/error.log
+    # CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    # active thw rewrite enginee for the web site
+	RewriteEngine on
+	RewriteCond %{SERVER_NAME} =www.example.com [OR]
+	RewriteCond %{SERVER_NAME} =example.com
+	RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]    
+</VirtualHost>
+EOF
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>Web-Secure-Server-Example</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+	<description>Web-Server-Example</description>	
+</snippet>

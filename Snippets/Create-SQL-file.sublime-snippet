@@ -1,0 +1,24 @@
+<snippet>
+	<content><![CDATA[
+
+# Notes: change dataase name with your own, same for user and password
+# the changes include:
+#	DATABASE_NAME
+#	user_name
+#	user_pass
+
+sudo cat <<EOF > myscript.sql
+create database DATABASE_NAME;
+alter database DATABASE_NAME character set utf8 collate utf8_bin
+create user 'user_name'@'localhost' identified by 'user_pass';
+grant all provileges on DATABASE_NAME.* to 'user_name'@'localhost' identified by 'user_pass';
+flush privileges;
+EOF
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>Create-SQL-file</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+	<description>Create SQL external file</description>
+</snippet>

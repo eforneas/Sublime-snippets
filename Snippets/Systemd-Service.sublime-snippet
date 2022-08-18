@@ -1,0 +1,35 @@
+<snippet>
+	<content><![CDATA[
+
+# Notes: change service for de real service name include the pid file
+# this service MySQL/MariaDB service and required a network connection
+# delete thos lines if you don't need it
+
+
+mkdir /var/run/service
+touch /var/run/service/service.pid
+
+cat <<EOF > /etc/systemd/system/xxxxxxxxxx.service
+[Unit]
+Description=Name of service
+Requires=network-online.target
+After=network-online.target mariadb.service time-sync.target
+
+[Service]
+User=Put a user name
+Type=forking
+ExecStart=/usr/local/service/service.x86 -ini /etc/service.ini
+PIDFile=/var/run/service/service.pid
+ExecReload=/bin/kill -s HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>Systemd-Service</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+	<description>Systemd Service template</description>
+</snippet>

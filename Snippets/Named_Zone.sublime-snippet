@@ -1,0 +1,53 @@
+<snippet>
+	<content><![CDATA[
+
+# Notes: change MYDOMAIN.COM with your domain name or host FQDN
+# IP is private class C 192.168.1.0/24 change it if needed
+# SPF use a public IP, change or deleted as needed
+# if you want to use _domainkey, please install opendkim and generate your own keys
+# change the key in TXT reg with your public rsa key
+# if the services are distributed along some servers change CNAME with the
+# apropiate IP of the host
+
+@	3600	IN	SOA	ns1.mydomain.com. hostmaster.mydomain.com. (
+			20190203
+			21600
+			3600
+			604800
+			86400 )
+
+			IN	NS	ns1.mydomain.com.
+mydomain.com.		IN	A	192.168.1.2
+ns1			IN	A	192.168.1.2
+host			IN	A	192.168.1.2
+;
+@			IN	MX	10 host.mydomain.com.
+; servicios
+mail			IN	A	192.168.1.2
+www			CNAME		mydomain.com.
+ftp			CNAME		mydomain.com.
+pop			CNAME		mydomain.com.
+smtp			CNAME		mydomain.com.
+imap			CNAME		mydomain.com.
+webmail			CNAME		mydomain.com.
+cloud			CNAME		mydomain.com.
+webdav			CNAME		mydomain.com.
+hora			CNAME		mydomain.com.
+router.mydomain.com		IN	A	192.168.1.1
+router			IN	A	192.168.1.1
+ovz1			IN	A	192.168.1.3
+ovz2			IN	A	192.168.1.4
+
+mydomain.com.	IN	TXT	"v=spf1 a mx ip4:213.37.153.202 -all"
+_dmarc			IN	TXT	"v=DMARC1; p=quarantine; rua=mailto:dmarc@mydomain.com; ruf=mailto:dmarc@mydomain.com; sp=quarantine"
+_dmarc			IN	TXT	"v=DMARC1; ruf=mailto:postmaster@mydomain.com" 
+mydomain._domainkey	IN	TXT	( "v=DKIM1; k=rsa; "
+	  "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDP6JirMaL4JSUxu12k5JcAh/JcvJ2jS/Sq5M9aa2z3Z9eI9FkdiJwUubnyau5lfc6gLmm/FYygf9cmyJkF4h5SmB0pCm001NZ8eoVzQVS4x+4CP/KIvSw2l4bxGFOxI4iOyp3YW05XstHxbEXQUbl9O9aZOYcAgb1xEtB65M1KGwIDAQAB" )
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>Named Zone</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+	<description>Named direct zone</description>
+</snippet>

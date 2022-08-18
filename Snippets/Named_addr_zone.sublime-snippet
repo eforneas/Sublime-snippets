@@ -1,0 +1,38 @@
+<snippet>
+	<content><![CDATA[
+
+# Notes: delete this line after make changes of your domain or host
+# reverse addres arpa is base on private C class 192.168.1.0/24
+# add the hosts needed
+
+@	IN	SOA	ns1.mydomain.com.1.168.192.in-addr.arpa. admin.1.168.192.in-addr.arpa. (
+			20190202
+			604800
+			86400
+			2419200
+			86400 )
+;ns records
+@	IN	NS	ns1.mydomain.com.1.168.192.in-addr.arpa.
+
+ns1.mydomain.com.1.168.192.in-addr.arpa.	IN	A	192.168.1.2
+
+;PTR records
+2			IN	PTR	ns1.mydomain.com.1.168.192.in-addr.arpa.
+2			IN	PTR	mydomain.com.
+2			IN	PTR host.mydomain.com.
+2           IN  PTR mail.mydomain.com
+2			IN	PTR	webdav.mydomain.com.
+2			IN	PTR	ftp.mydomain.com.
+2			IN	PTR	webmin.mydomain.com.
+2			IN	PTR	wp.mydomain.com.
+1			IN	PTR	router.mydomain.com.
+3			IN	PTR	ovz1
+4			IN	PTR	ovz2
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>Named inverse zone</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+	<description>Named inverse in-addr.arpa zone</description>
+</snippet>

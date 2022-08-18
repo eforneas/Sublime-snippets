@@ -1,0 +1,30 @@
+<snippet>
+	<content><![CDATA[
+
+# Notes: the service start after a netwotk connection
+# service belong to a user and group, don't forget to change it with the
+# apropiate data
+
+cat <<EOF > /etc/systemd/system/service.service
+[Unit]
+Description=Service description
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=user name
+Group=group name
+ExecStart=/opt/service/service-lite/bin/run.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>Systemd-Simple-Service</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+	<description>Systemd-Simple-Service</description>
+</snippet>
