@@ -2,8 +2,10 @@
 	<content><![CDATA[
 #!/bin/bash
 #
-# Author: Eduardo Fórneas (@eforneas)
-# Date: may 2022
+# Author: 
+# Date: 
+# Proyect:
+# Revised by:
 # Purpose:
 #
 #
@@ -11,6 +13,13 @@
 #
 # 
 #
+
+RED='\033[0;31m'
+BLUE='\033[1;34m'
+NC='\033[0m' # No Color
+file=""
+
+alias echo="echo -e "
 
 ]]></content>
 	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->

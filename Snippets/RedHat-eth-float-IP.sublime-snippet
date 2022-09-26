@@ -1,0 +1,19 @@
+<snippet>
+	<content><![CDATA[
+
+cat << 'EOF' > /etc/sysconfig/network-scripts/ifcfg-enp0s3:1
+DEVICE=enp0s3:1
+BOOTPROTO=static
+ONBOOT=yes
+NM_CONTROLLED=no
+IPADDR=185.20.139.29
+NETMASK=255.255.255.255
+EOF
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>RedHat-Eth-float-IP</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+	<description>RedHat/CentOS/Rocky Ethernet float IP config</description>
+</snippet>

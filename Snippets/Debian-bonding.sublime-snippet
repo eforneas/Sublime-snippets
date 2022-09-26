@@ -1,0 +1,44 @@
+<snippet>
+	<content><![CDATA[
+
+# Debian and derivates bonding, change the parameters needed
+
+cat <<'EOF' > /etc/modprobe.d/bonding.conf
+alias bond0 bonding
+options bonding mode=active-backup miimon=100 downdelay=200 updelay=200 primary=enp0s3
+EOF
+
+cat <<'EOF' > /etc/network/interfaces
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto bond0
+iface bond0 inet manual
+        up ifconfig bond0 0.0.0.0 up
+        slaves enp0s8 enp0s3
+auto vlan10
+iface vlan10 inet static
+        address 10.10.10.12/24
+        vlan-raw-device bond0
+        gateway 10.10.0.1
+        dns-search sweet.home
+        dns-nameservers 10.10.0.2
+auto vlan20
+iface vlan20 inet static
+        address 10.20.10.12/24
+        vlan-raw-device bond0
+auto vlan30
+iface vlan30 inet static
+        address 10.30.10.12/24
+        vlan-raw-device bond0
+EOF
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>Debian-bonding</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+	<description>Debian interfaces sample for bondig</description>
+</snippet>

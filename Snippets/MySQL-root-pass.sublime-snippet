@@ -1,0 +1,28 @@
+<snippet>
+	<content><![CDATA[
+
+# change rootpass with your own
+# the script change the password for root use and crete a new root user with all host access 
+# usefull to develop or local LAN, insecure por production
+
+cat >rootaccess.sql <<EOL
+use mysql;
+update user set authentication_string=PASSWORD("rootpass") where User='root';
+update user set Password=PASSWORD("rootpass") where User='root';
+flush privileges;
+create user `root`@`%` identified by 'rootpass';
+grant all privileges on *.* to `root`@`%` identified by 'rootpass' with grant option;
+flush privileges;
+\q
+EOL
+
+# execute the script for change the root password and crete a new root@% user
+mysql -u root -p < rootaccess.sql
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>MySQL-root-pass</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+	<description>Change the MySQL/MariaDB root password and create a new root@%</description>
+</snippet>

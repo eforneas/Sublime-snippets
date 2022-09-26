@@ -1,0 +1,23 @@
+<snippet>
+	<content><![CDATA[
+
+
+# test to know if the actual user have root permissions or is the root user
+
+if [ \$(id -u) = 0 ] ; then 
+	echo "I'm root"
+else
+	echo "You haven't root permission. Aborted script."
+	exit 1
+fi
+
+echo "Tasks to do..."
+
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>Root-user-test</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+	<description>Know user have root permissions</description>
+</snippet>

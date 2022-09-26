@@ -1,0 +1,36 @@
+<snippet>
+	<content><![CDATA[
+
+# Debian and derivates multiple IP on one interface, modify as needed
+# this method don't use vlan package or 8021q mod
+
+# NOTE: add gateway and/or DNS as needed, iptables may be added too, install 
+#	iptables-persistent to do this and save the rule using iptables-save <path/file>
+
+cat <<'EOF' > /etc/network/interfaces
+auto enp0s3
+
+allow-hotplug enp0s3
+iface enp0s3 inet static
+    address 192.168.1.42/24
+    gateway 192.168.1.1
+
+auto enp0s3:0
+allow-hotplug enp0s3:0
+iface enp0s3:0 inet static
+    address 192.168.1.43/24
+
+auto enp0s3:1
+allow-hotplug enp0s3:1
+iface enp0s3:1 inet static
+    address 192.168.1.44/24
+
+EOF
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>Debian-multiple-IP</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+	<description>Debian multiple IP legacy method</description>
+</snippet>

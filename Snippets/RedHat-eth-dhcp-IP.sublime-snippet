@@ -1,0 +1,32 @@
+<snippet>
+	<content><![CDATA[
+
+
+cat << 'EOF' > /etc/sysconfig/network-scripts/ifcfg-enp0s8
+MACADDR=[MAC_ADDR]
+MTU=1500
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=dhcp
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME="enp0s8"
+UUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+DEVICE=enp0s8
+ONBOOT=yes
+
+EOF
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>RedHat-Eth-dhcp-IP</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+	<description>RedHat/CentOS/Rocky Ethernet DHCP IP config</description>
+</snippet>

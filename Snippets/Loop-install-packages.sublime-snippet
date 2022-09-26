@@ -1,0 +1,31 @@
+<snippet>
+	<content><![CDATA[
+
+# read a file with de package name to install
+
+RED='\033[0;31m'
+BLUE='\033[1;34m'
+NC='\033[0m' # No Color
+file="packages.cfg"
+
+if [ -f $file ]; then
+
+	while IFS= read -r package
+	do
+	    # install the package
+	    # echo "$package"
+		clear && echo -e "${BLUE}Installing ${package}...${NC}" && echo
+		yum install -y "$package"
+		echo -e "\n${RED}Installed.${NC}" && sleep 2
+	done <"$file"
+
+	exit 0
+fi
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>Loop-install-packages</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+	<description>Loop to read a file and install packages</description>
+</snippet>
